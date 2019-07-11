@@ -17,11 +17,11 @@ namespace Filmdatenbank
 
             using (StreamReader reader = new StreamReader(path))
             {
-                Regex rgxActor = new Regex('"' + "([0-9]*)" + '"' + "," + '"' + "*(.*?) *" + '"');
-                Regex rgxMovie = new Regex('"' + "([0-9]*)" + '"' + "," + '"' + "*(.*?) *" + '"' + "," + '"' + "*(.*?) *" + '"' + "," + '"' + "*(.*?) *" + '"' + "," + '"' + "*(.*?) *" + '"' + "," + '"' + "*(.*?) *" + '"' + "," + '"' + "*(.*?) *" + '"');
-                Regex rgxDirector = new Regex('"' + "([0-9]*)" + '"' + "," + '"' + "*(.*?) *" + '"');
-                Regex rgxActorMovie = new Regex('"' + "([0-9]*)" + '"' + "," + '"' + "*(.*?) *" + '"');
-                Regex rgxDirectorMovie = new Regex('"' + "([0-9]*)" + '"' + "," + '"' + "*(.*?) *" + '"');
+                Regex rgxActor = new Regex          ('"' + "([0-9]*)" + '"' + "," + '"' + " *(.*?) *" + '"');
+                Regex rgxMovie = new Regex          ('"' + "([0-9]*)" + '"' + "," + '"' + " *(.*?) *" + '"' + "," + '"' + " *(.*?) *" + '"' + "," + '"' + " *(.*?) *" + '"' + "," + '"' + " *(.*?) *" + '"' + "," + '"' + " *(.*?) *" + '"' + "," + '"' + " *(.*?) *" + '"');
+                Regex rgxDirector = new Regex       ('"' + "([0-9]*)" + '"' + "," + '"' + " *(.*?) *" + '"');
+                Regex rgxActorMovie = new Regex     ('"' + "([0-9]*)" + '"' + "," + '"' + " *(.*?) *" + '"');
+                Regex rgxDirectorMovie = new Regex  ('"' + "([0-9]*)" + '"' + "," + '"' + " *(.*?) *" + '"');
 
                 string SearchStringActorsData = "New_Entity: \"actor_id\",\"actor_name\"";
                 string SearchStringMoviesData = "New_Entity: \"movie_id\",\"movie_title\",\"movie_plot\",\"genre_name\",\"movie_released\",\"movie_imdbVotes\",\"movie_imdbRating\"";

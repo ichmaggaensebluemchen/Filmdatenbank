@@ -22,16 +22,12 @@ namespace Filmdatenbank
                 {
                     case "filmsuche":
                         SearchMovie movieSearch = new SearchMovie(MovProData, searchTypArg);
-                        //var selMovies = movieSearch.PatternName(searchTypArg);
-                        //movieSearch.Print(selMovies, searchTypArg);
                         break;
                     case "schauspielersuche":
                         SearchActor actorSearch = new SearchActor(MovProData, searchTypArg);
                         break;
                     case "filmnetzwerk":
-                        SearchMovieNet searchMovieNet = new SearchMovieNet(MovProData);
-                        var selMovieNet = searchMovieNet.Filter(searchTypArg);
-                        searchMovieNet.Print(selMovieNet, searchTypArg);
+                        SearchMovieNet searchMovieNet = new SearchMovieNet(MovProData, searchTypArg);
                         break;
                     case "schauspielernetzwerk":
                         SearchActorNet searchActorNet = new SearchActorNet(MovProData);

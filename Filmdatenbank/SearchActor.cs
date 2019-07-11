@@ -11,7 +11,7 @@ namespace Filmdatenbank
         public SearchActor(DataImport movProData, string Filter):base(movProData)
         {
             List<int> selActors = PatternName(Filter);
-            Dictionary<int, List<int>> foo = ActorsAndThereMovies(selActors);
+            Dictionary<int, List<int>> foo = ActorsIDsAndThereMoviesIDs(selActors);
             Print(foo, Filter);
         }
 
@@ -27,31 +27,6 @@ namespace Filmdatenbank
                 }
             }
             return filteredActors;  //Liste von Schauspielern deren Name das Suchwort enthält
-        }
-
-        //Gibt eine Liste vom Film IDs zurück in welchen ein bestimmter Schauspieler gespielt hat
-        public List<int> OneActorManyMovies(int actor)
-        {
-            List<int> movies = new List<int>();
-            foreach (var actorMovie in MovProData.ActorMoviesConList)
-            {
-                if (actorMovie.ActorID == actor)
-                {
-                    movies.Add(actorMovie.MovieID);
-                }
-            }
-            return movies;  //Liste von Film-IDs in denen ein bestimmter Schauspieler gespielt hat
-        }
-
-        //Sammelt für alle gefundene Namens-ID die Film-IDs ein
-        public Dictionary<int, List<int>> ActorsAndThereMovies(List<int> filteredActors)
-        {
-            Dictionary<int, List<int>> actorsAndThereMoviesDic = new Dictionary<int, List<int>>();
-            foreach (var item in filteredActors)
-            {
-                actorsAndThereMoviesDic.Add(item, OneActorManyMovies(item));
-            }
-            return actorsAndThereMoviesDic;
         }
 
         //Ausgabe der gefundenen Schauspieler und aller Filme in denen Sie mitgespielt haben
