@@ -1,58 +1,68 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Filmdatenbank
 {
-    class SearchActor
+    /// <summary>
+    /// Ermittelt 
+    /// </summary>
+    class SearchActor : SearchBase
     {
-        private DataImport movProData;
-        private List<int> filteredActors = new List<int>();
-        private List<int> filteredActorMovies = new List<int>();
-
-        public SearchActor(DataImport movProData)
+        public SearchActor(DataImport movProData, string Filter):base(movProData)
         {
-            this.movProData = movProData;
+            List<int> selActors = PatternName(Filter);
+            Dictionary<int, List<int>> foo = ActorsAndThereMovies(selActors);
+            Print(foo, Filter);
         }
 
-        public List<int> Filter(string filter)
+        //Gibt eine Liste vom Schauspieler-IDs zurück in deren Namensangaben das mit 'Filter' angegebene Wort vorkommt
+        public List<int> PatternName(string filter)
         {
-            foreach (var film in movProData.DirectorsDic)
+            List<int> filteredActors = new List<int>();
+            foreach (var film in MovProData.ActorsDic)
             {
                 if (film.Value.Contains(filter))
                 {
                     filteredActors.Add(film.Key);
                 }
             }
-            return filteredActors;
+            return filteredActors;  //Liste von Schauspielern deren Name das Suchwort enthält
         }
 
+        //Gibt eine Liste vom Film IDs zurück in welchen ein bestimmter Schauspieler gespielt hat
         public List<int> OneActorManyMovies(int actor)
         {
             List<int> movies = new List<int>();
-            foreach (var actorMovie in movProData.ActorMoviesConList)
+            foreach (var actorMovie in MovProData.ActorMoviesConList)
             {
-                if (actorMovie.ActorID==actor)
+                if (actorMovie.ActorID == actor)
                 {
                     movies.Add(actorMovie.MovieID);
                 }
             }
-
-
-            return movies;
+            return movies;  //Liste von Film-IDs in denen ein bestimmter Schauspieler gespielt hat
         }
-        public void Print(List<int> actors, string filter)
+
+        //Sammelt für alle gefundene Namens-ID die Film-IDs ein
+        public Dictionary<int, List<int>> ActorsAndThereMovies(List<int> filteredActors)
         {
-            Console.WriteLine("Die Suche nach '{0}' ergab {1} Treffer:", filter, actors.Count);
-            Console.WriteLine("-----------------------------------------------------------");
-            foreach (var actor in actors)
+            Dictionary<int, List<int>> actorsAndThereMoviesDic = new Dictionary<int, List<int>>();
+            foreach (var item in filteredActors)
             {
-                //Console.WriteLine("ID {0} - {1}", actor, movProData.MoviesDic[actor].Movie_Title);
-                Console.WriteLine("ID {0} - {1}", actor, movProData.MoviesDic[actor].Movie_Title);
-                Console.WriteLine("{0}", movProData.MoviesDic[actor].Movie_Plot);
-                Console.WriteLine();
+                actorsAndThereMoviesDic.Add(item, OneActorManyMovies(item));
+            }
+            return actorsAndThereMoviesDic;
+        }
+
+        //Ausgabe der gefundenen Schauspieler und aller Filme in denen Sie mitgespielt haben
+        public void Print(Dictionary<int, List<int>> actorsAndThereMoviesDic, string filter)
+        {
+            Console.WriteLine("Die Suche nach '{0}' ergab {1} Treffer:", filter, actorsAndThereMoviesDic.Count);
+            Console.WriteLine("-----------------------------------------------------------");
+            foreach (var item in actorsAndThereMoviesDic)
+            {
+                Console.WriteLine("---------------{0}------------", MovProData.ActorsDic[item.Key]);
+                PrintMovies(item.Value);
             }
         }
     }

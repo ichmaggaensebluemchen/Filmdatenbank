@@ -60,12 +60,15 @@
   <ItemGroup>
     <Compile Include="ActorMovies.cs" />
     <Compile Include="DirectorMovies.cs" />
+    <Compile Include="SearchBase.cs" />
     <Compile Include="SearchActor.cs" />
     <Compile Include="DataImport.cs" />
     <Compile Include="Movie.cs" />
+    <Compile Include="SearchActorNet.cs" />
     <Compile Include="SearchMovie.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchMovieNet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

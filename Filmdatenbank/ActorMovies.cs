@@ -4,15 +4,11 @@ namespace Filmdatenbank
 {
     public class ActorMovies
     {
-        private int result;
-        private int result2;
-
-        public ActorMovies(int result, int result2)
+        public ActorMovies(int actorID, int movieID)
         {
-            this.result = result;
-            this.result2 = result2;
+            this.ActorID = actorID;
+            this.MovieID = movieID;
         }
-
         public int ActorID { get; set; }
         public int MovieID { get; set; }
     }

@@ -54,6 +54,7 @@ namespace Filmdatenbank
                     }
                     line = reader.ReadLine();
                 }
+
                 line = reader.ReadLine();
                 while (line != SearchStringAchtorsMoviesData)
                 {
@@ -62,6 +63,7 @@ namespace Filmdatenbank
                     DirectorsDic.Add(result, match.Groups[2].Value);
                     line = reader.ReadLine();
                 }
+
                 line = reader.ReadLine();
                 while (line != SearchStringDirectorsMoviesData)
                 {
@@ -70,16 +72,6 @@ namespace Filmdatenbank
                     int.TryParse(match.Groups[1].Value, out result);
                     int.TryParse(match.Groups[2].Value, out result2);
                     ActorMoviesConList.Add(new ActorMovies(result, result2));
-
-                    //if (ActorMoviesConDic.ContainsKey(result))
-                    //{
-                    //    ActorMovieErrorList.Add(match.Value);
-                    //}
-                    //else
-                    //{
-                    //    int.TryParse(match.Groups[2].Value, out result2);
-                    //    ActorMoviesConDic.Add(result, result2);
-                    //}
                     line = reader.ReadLine();
                 }
                 line = reader.ReadLine();
@@ -89,16 +81,6 @@ namespace Filmdatenbank
                     int.TryParse(match.Groups[1].Value, out result);
                     int.TryParse(match.Groups[2].Value, out result2);
                     DirectorMoviesConList.Add(new DirectorMovies(result, result2));
-
-                    //if (DirectorMoviesConDic.ContainsKey(result))
-                    //{
-                    //    DirectorMovieErrorList.Add(match.Value);
-                    //}
-                    //else
-                    //{
-                    //    int.TryParse(match.Groups[2].Value, out result2);
-                    //    DirectorMoviesConDic.Add(result, result2);
-                    //}
                     line = reader.ReadLine();
                 }
             }
@@ -106,8 +88,6 @@ namespace Filmdatenbank
         public Dictionary<int, string> ActorsDic { get; set; } = new Dictionary<int, string>();
         public Dictionary<int, Movie> MoviesDic { get; set; } = new Dictionary<int, Movie>();
         public Dictionary<int, string> DirectorsDic { get; set; } = new Dictionary<int, string>();
-        //public Dictionary<int, int> ActorMoviesConDic { get; set; } = new Dictionary<int, int>();
-        //public Dictionary<int, int> DirectorMoviesConDic { get; set; } = new Dictionary<int, int>();
         public List<ActorMovies> ActorMoviesConList { get; set; } = new List<ActorMovies>();
         public List<DirectorMovies> DirectorMoviesConList { get; set; } = new List<DirectorMovies>();
         public List<String> MoviesErrorList = new List<String>();
