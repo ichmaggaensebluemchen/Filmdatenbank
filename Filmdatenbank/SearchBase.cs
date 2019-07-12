@@ -11,9 +11,9 @@ namespace Filmdatenbank
         }
 
         //Gibt eine Liste vom IDs zurück in deren Namensangaben das mit 'Filter' angegebene Wort vorkommt
-        public List<int> PatternBase(string filter)
+        public HashSet<int> PatternBase(string filter)
         {
-            List<int> filteredList = new List<int>();
+            HashSet<int> filteredList = new HashSet<int>();
             foreach (var item in MovProData.MoviesDic)
             {
                 if (item.Value.Movie_Title.Contains(filter))
@@ -24,51 +24,56 @@ namespace Filmdatenbank
             return filteredList;  //Liste von Schauspielern deren Name das Suchwort enthält
         }
 
-        //Gibt eine Liste vom Film IDs zurück in welchen ein bestimmter Schauspieler gespielt hat
-        public List<int> OneActorManyMovies(int actor)
+        //Gibt eine Liste von Film IDs zurück in welchen ein bestimmter Schauspieler gespielt hat (bei Actor ist False)
+        //Gibt eine Liste von Schauspieler IDs zurück welche in einem Film mitgespielt haben (bei Actor ist True)
+        public HashSet<int> ActorOrMovieList(int actorOrMovieID, bool IsActor)
         {
-            List<int> movies = new List<int>();
-            foreach (var actorMovie in MovProData.ActorMoviesConList)
+            HashSet<int> actorsOrMovies = new HashSet<int>();
+            if (IsActor)
             {
-                if (actorMovie.ActorID == actor)
+                foreach (var actorMovieCon in MovProData.ActorMoviesConList)
                 {
-                    movies.Add(actorMovie.MovieID);
+                    if (actorMovieCon.ActorID == actorOrMovieID)
+                    {
+                        actorsOrMovies.Add(actorMovieCon.MovieID);
+                    }
                 }
             }
-            return movies;  //Liste von Film-IDs in denen ein bestimmter Schauspieler gespielt hat
-        }
-
-        //Gibt eine Liste vom Schauspieler IDs zurück welche im selben Film mitspielten
-        public List<int> ManyActorsOneMovie(int movie)
-        {
-            List<int> actors = new List<int>();
-            foreach (var actorMovie in MovProData.ActorMoviesConList)
+            else
             {
-                if (actorMovie.MovieID == movie)
+                foreach (var actorMovieCon in MovProData.ActorMoviesConList)
                 {
-                    actors.Add(actorMovie.MovieID);
+                    if (actorMovieCon.MovieID == actorOrMovieID)
+                    {
+                        actorsOrMovies.Add(actorMovieCon.ActorID);
+                    }
                 }
-            }
-            return actors;  //Liste von Film-IDs in denen ein bestimmter Schauspieler gespielt hat
-        }
 
+            }
+            return actorsOrMovies;
+        }
 
         //Sammelt für alle gefundene Namens-ID die Film-IDs ein
-        public Dictionary<int, List<int>> ActorsIDsAndThereMoviesIDs(List<int> filteredActors)
+        public Dictionary<int, HashSet<int>> ActorsIDsAndThereMoviesIDs(HashSet<int> selMovies)
         {
-            Dictionary<int, List<int>> actorsAndThereMoviesDic = new Dictionary<int, List<int>>();
-            foreach (var item in filteredActors)
+            Dictionary<int, HashSet<int>> oneActorManyMovies = new Dictionary<int, HashSet<int>>();
+            foreach (var movie in selMovies)
             {
-                //if (!actorsAndThereMoviesDic.ContainsKey(item))
-                //{
-                    actorsAndThereMoviesDic.Add(item, OneActorManyMovies(item));
-                //}
+                foreach (var item in MovProData.ActorMoviesConList)
+                {
+                    if (item.MovieID == movie)
+                    {
+                        if (!oneActorManyMovies.ContainsKey(movie))
+                        {
+                            oneActorManyMovies.Add(movie, ActorOrMovieList(movie, false));
+                        }
+                    }
+                }
             }
-            return actorsAndThereMoviesDic;
+            return oneActorManyMovies;
         }
 
-
-        public void PrintMovies(List<int> movies)
+        public void PrintMovies(HashSet<int> movies)
         {
             foreach (var movie in movies)
             {
@@ -76,6 +81,41 @@ namespace Filmdatenbank
                 Console.WriteLine("{0}", MovProData.MoviesDic[movie].Movie_Plot);
                 Console.WriteLine();
             }
+        }
+
+        public void PrintNet(HashSet<int> selection, string headline, object dicObj)
+        {
+            bool isMovie = dicObj is Dictionary<int, Movie>;
+
+            Console.Write(headline);
+            foreach (var item in selection)
+            {
+                if (isMovie)
+                {
+                    var dic = dicObj as Dictionary<int, Movie>;
+                    Console.Write(" {0},", dic[item].Movie_Title);
+                }
+                else
+                {
+                    var dic = dicObj as Dictionary<int, string>;
+                    Console.Write(" {0},", dic[item]);
+                }
+            }
+            Console.Write("\b \b\n");
+        }
+
+        //Erstellt aus der Liste der Schauspieler und ihren jeweiligen Filme eine Filmliste ohne Doppelte Filme
+        public HashSet<int> unique(Dictionary<int, HashSet<int>> selMovies)
+        {
+            HashSet<int> uniqueMovies = new HashSet<int>();
+            foreach (var Movie in selMovies)
+            {
+                foreach (var item in Movie.Value)
+                {
+                    uniqueMovies.Add(item);
+                }
+            }
+            return uniqueMovies;
         }
 
         public DataImport MovProData { get; set; }

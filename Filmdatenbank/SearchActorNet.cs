@@ -9,38 +9,13 @@ namespace Filmdatenbank
         {
             int actorIDint;
             int.TryParse(actorIDstring, out actorIDint);
-            //Liste aller Filme in der der Schauspieler mitgewirkt hat
-            List<int> selMovies = OneActorManyMovies(actorIDint);
-            Dictionary<int, List<int>> selActors = ActorsIDsAndThereMoviesIDs(selMovies);
+            //Liste aller Film IDs in ein Schauspieler mitgewirkt hat
+            HashSet<int> selMovies = ActorOrMovieList(actorIDint, true);
+            Dictionary<int, HashSet<int>> selActors = ActorsIDsAndThereMoviesIDs(selMovies);
+            HashSet<int> uniqueActors = unique(selActors);
 
-            PrintMovies(selMovies);
-            PrintActors(selActors);
-
+            PrintNet(selMovies, "Filme:", (Object)MovProData.MoviesDic);
+            PrintNet(uniqueActors, "Schauspieler:", (Object)MovProData.ActorsDic);
         }
-
-        void PrintMovies(List<int> selMovies)
-        {
-            Console.Write("Filme:");
-            foreach (var movie in selMovies)
-            {
-                Console.Write(" {0},", MovProData.MoviesDic[movie].Movie_Title);
-            }
-            Console.Write("\b \b\n");
-        }
-
-        void PrintActors(Dictionary<int, List<int>> selActors)
-        {
-            Console.Write("Schauspieler:");
-            foreach (var actor in selActors)
-            {
-                foreach (var item in actor.Value)
-                {
-                    Console.Write(" {0},", MovProData.ActorsDic[item]);
-                }
-            }
-            Console.Write("\b \b\n");
-        }
-
-
     }
 }

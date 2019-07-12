@@ -10,15 +10,15 @@ namespace Filmdatenbank
     {
         public SearchActor(DataImport movProData, string Filter):base(movProData)
         {
-            List<int> selActors = PatternName(Filter);
-            Dictionary<int, List<int>> foo = ActorsIDsAndThereMoviesIDs(selActors);
+            HashSet<int> selActors = PatternName(Filter);
+            Dictionary<int, HashSet<int>> foo = ActorsIDsAndThereMoviesIDs(selActors);
             Print(foo, Filter);
         }
 
         //Gibt eine Liste vom Schauspieler-IDs zurück in deren Namensangaben das mit 'Filter' angegebene Wort vorkommt
-        public List<int> PatternName(string filter)
+        public HashSet<int> PatternName(string filter)
         {
-            List<int> filteredActors = new List<int>();
+            HashSet<int> filteredActors = new HashSet<int>();
             foreach (var film in MovProData.ActorsDic)
             {
                 if (film.Value.Contains(filter))
@@ -30,7 +30,7 @@ namespace Filmdatenbank
         }
 
         //Ausgabe der gefundenen Schauspieler und aller Filme in denen Sie mitgespielt haben
-        public void Print(Dictionary<int, List<int>> actorsAndThereMoviesDic, string filter)
+        public void Print(Dictionary<int, HashSet<int>> actorsAndThereMoviesDic, string filter)
         {
             Console.WriteLine("Die Suche nach '{0}' ergab {1} Treffer:", filter, actorsAndThereMoviesDic.Count);
             Console.WriteLine("-----------------------------------------------------------");
