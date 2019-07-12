@@ -64,7 +64,7 @@ namespace Filmdatenbank
             {
                 Console.Write(" {0},", MovProData.MoviesDic[movie].Movie_Title);
             }
-            Console.Write("\b \b");
+            Console.Write("\b \b\n");
         }
     }
 }

@@ -38,16 +38,31 @@ namespace Filmdatenbank
             return movies;  //Liste von Film-IDs in denen ein bestimmter Schauspieler gespielt hat
         }
 
+        //Gibt eine Liste vom Schauspieler IDs zurück welche im selben Film mitspielten
+        public List<int> ManyActorsOneMovie(int movie)
+        {
+            List<int> actors = new List<int>();
+            foreach (var actorMovie in MovProData.ActorMoviesConList)
+            {
+                if (actorMovie.MovieID == movie)
+                {
+                    actors.Add(actorMovie.MovieID);
+                }
+            }
+            return actors;  //Liste von Film-IDs in denen ein bestimmter Schauspieler gespielt hat
+        }
+
+
         //Sammelt für alle gefundene Namens-ID die Film-IDs ein
         public Dictionary<int, List<int>> ActorsIDsAndThereMoviesIDs(List<int> filteredActors)
         {
             Dictionary<int, List<int>> actorsAndThereMoviesDic = new Dictionary<int, List<int>>();
             foreach (var item in filteredActors)
             {
-                if (!actorsAndThereMoviesDic.ContainsKey(item))
-                {
+                //if (!actorsAndThereMoviesDic.ContainsKey(item))
+                //{
                     actorsAndThereMoviesDic.Add(item, OneActorManyMovies(item));
-                }
+                //}
             }
             return actorsAndThereMoviesDic;
         }

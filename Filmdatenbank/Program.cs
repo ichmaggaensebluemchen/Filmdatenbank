@@ -30,9 +30,7 @@ namespace Filmdatenbank
                         SearchMovieNet searchMovieNet = new SearchMovieNet(MovProData, searchTypArg);
                         break;
                     case "schauspielernetzwerk":
-                        SearchActorNet searchActorNet = new SearchActorNet(MovProData);
-                        var selActorNet = searchActorNet.Filter(searchTypArg);
-                        searchActorNet.Print(selActorNet, searchTypArg);
+                        SearchActorNet searchActorNet = new SearchActorNet(MovProData, searchTypArg);
                         break;
                     default:
                         defaultSearch(searchTypArg);
