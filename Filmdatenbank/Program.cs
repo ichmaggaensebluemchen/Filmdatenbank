@@ -12,8 +12,8 @@ namespace Filmdatenbank
         {
             if (args[0] != String.Empty)
             {
-                //string path = @"C:\Users\Rolf\source\repos\Filmdatenbank\Filmdatenbank\Daten\movieproject2019.db";
-                string path = @"C:\Users\rolf\Source\Repos\ichmaggaensebluemchen\Filmdatenbank\Filmdatenbank\Daten\movieproject2019.db";
+                string path = @"C:\Users\Rolf\source\repos\Filmdatenbank\Filmdatenbank\Daten\movieproject2019.db";
+                //string path = @"C:\Users\rolf\Source\Repos\ichmaggaensebluemchen\Filmdatenbank\Filmdatenbank\Daten\movieproject2019.db";
              DataImport MovProData = new DataImport(path);              
                 string arg = args[0].ToString();
                 Match searchArgument = Regex.Match(arg, "--(.*?)=(.*?)$");

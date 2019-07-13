@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Filmdatenbank
 {
-    internal class SearchMovieNet : SearchBase
+    public class SearchMovieNet : SearchBase
     {
         public SearchMovieNet(DataImport movProData, string movieIDstring):base(movProData)
         {

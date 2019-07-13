@@ -6,7 +6,7 @@ namespace Filmdatenbank
     /// <summary>
     /// Ermittelt 
     /// </summary>
-    class SearchActor : SearchBase
+    public class SearchActor : SearchBase
     {
         public SearchActor(DataImport movProData, string Filter):base(movProData)
         {

@@ -42,5 +42,50 @@ namespace Filmdatenbank.Tests
 
             Assert.IsTrue(SummeTrue + SummeFalse + 5 == 88809);
         }
+        [TestMethod]
+        public void FilmeSuchen()
+        {
+            //Arrange
+            string path = @"C:\Users\Rolf\source\repos\Filmdatenbank\Filmdatenbank\Daten\movieproject2019.db";
+            //Act
+            DataImport MPD = new DataImport(path);
+            SearchMovie movieSearch = new SearchMovie(MPD, "Matrix");
+            //Assert
+            Assert.IsTrue(true);
+        }
+        [TestMethod]
+        public void SchauspielerSuchen()
+        {
+            //Arrange
+            string path = @"C:\Users\Rolf\source\repos\Filmdatenbank\Filmdatenbank\Daten\movieproject2019.db";
+            //Act
+            DataImport MPD = new DataImport(path);
+            SearchActor actorSearch = new SearchActor(MPD, "Smith");
+            //Assert
+            Assert.IsTrue(true);
+        }
+        [TestMethod]
+        public void FilmnetzwerkAnzeigen()
+        {
+            //Arrange
+            string path = @"C:\Users\Rolf\source\repos\Filmdatenbank\Filmdatenbank\Daten\movieproject2019.db";
+            //Act
+            DataImport MPD = new DataImport(path);
+            SearchMovieNet searchMovieNet = new SearchMovieNet(MPD, "4899");
+            //Assert
+            Assert.IsTrue(true);
+        }
+        [TestMethod]
+        public void SchauspielernetzwerkAnzeigen()
+        {
+            //Arrange
+            string path = @"C:\Users\Rolf\source\repos\Filmdatenbank\Filmdatenbank\Daten\movieproject2019.db";
+            //Act
+            DataImport MPD = new DataImport(path);
+            SearchActorNet searchActorNet = new SearchActorNet(MPD, "17562");
+           //Assert
+            Assert.IsTrue(true);
+        }
+
     }
 }
