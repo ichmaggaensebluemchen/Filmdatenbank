@@ -10,12 +10,20 @@ namespace Filmdatenbank
             int movieIDint;
             int.TryParse(movieIDstring, out movieIDint);
             //Liste aller Schauspieler IDs die in einem Film mitgewirkt haben
-            HashSet<int> selActors = ActorOrMovieList(movieIDint, false);
-            Dictionary<int, HashSet<int>> selMovies = ActorsIDsAndThereMoviesIDs(selActors);
-            HashSet<int> uniqueMovies = unique(selMovies);
+            HashSet<int> selActors = MovProData.MovieActorsDic[movieIDint];
+
+            //Alle Filme in denen die gesammelten Schauspieler mitgespielt haben
+            HashSet<int> allMoviesActorsNet = new HashSet<int>();
+            foreach (var actorID in selActors)
+            {
+                foreach (var item in MovProData.ActorMoviesDic[actorID])
+                {
+                    allMoviesActorsNet.Add(item);
+                }
+            }
 
             PrintNet(selActors, "Schauspieler:", (Object)MovProData.ActorsDic);
-            PrintNet(uniqueMovies, "Filme:", (Object)MovProData.MoviesDic);
+            PrintNet(allMoviesActorsNet, "Filme:", (Object)MovProData.MoviesDic);
         }
     }
 }

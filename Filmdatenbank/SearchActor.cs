@@ -10,9 +10,13 @@ namespace Filmdatenbank
     {
         public SearchActor(DataImport movProData, string Filter):base(movProData)
         {
+            //Auflistung aller Schauspieler in deren Namemsagabe das gesuchte Wort vorkommt
             HashSet<int> selActors = PatternName(Filter);
-            Dictionary<int, HashSet<int>> foo = ActorsIDsAndThereMoviesIDs(selActors);
-            Print(foo, Filter);
+
+            //Auflistung aller Filme in denen ein Schauspieler mitgespielt hat
+            Dictionary<int, HashSet<int>> actorMoviesDic = MoviesIDsAndThereActorsIDs(selActors);
+
+            Print(actorMoviesDic, Filter);
         }
 
         //Gibt eine Liste vom Schauspieler-IDs zurück in deren Namensangaben das mit 'Filter' angegebene Wort vorkommt
@@ -37,7 +41,7 @@ namespace Filmdatenbank
             foreach (var item in actorsAndThereMoviesDic)
             {
                 Console.WriteLine("---------------{0}------------", MovProData.ActorsDic[item.Key]);
-                PrintMovies(item.Value);
+                PrintMovieDetails(item.Value);
             }
         }
     }

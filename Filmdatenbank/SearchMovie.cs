@@ -19,7 +19,7 @@ namespace Filmdatenbank
         {
             Console.WriteLine("Die Suche nach '{0}' ergab {1} Treffer:", filter, movies.Count);
             Console.WriteLine("-----------------------------------------------------------");
-            PrintMovies(movies);
+            PrintMovieDetails(movies);
         }
     }
 }
